@@ -62,6 +62,9 @@ int main() {
 
     int pointingAtZeroCount = 0;
 
+    printf("\n");
+    printf("Dial at: %d\n\n", position);
+
     for (size_t i = 0; i <= file_buff_size; i++)
     {
         char character = file_buff[i];
@@ -85,10 +88,15 @@ int main() {
             int turnByNumber = atoi(turnByStepsBuffer);
             print_turn(direction, turnByNumber);
 
-            int turnByWithDirection = turnByNumber * (direction == LEFT ? -1 : 1);
-            position = (position + ALL_STEPS_COUNT + turnByWithDirection) % ALL_STEPS_COUNT;
+            for (size_t j = 0; j < turnByNumber; j++) {
+                if (direction == LEFT) {
+                    position = (position + ALL_STEPS_COUNT - 1) % ALL_STEPS_COUNT;
+                } else {
+                    position = (position + ALL_STEPS_COUNT + 1) % ALL_STEPS_COUNT;
+                }
 
-            if (position == 0) pointingAtZeroCount++;
+                if (position == 0) pointingAtZeroCount++;
+            }
 
             cleanUpTurnByBuffer();
         }
