@@ -24,4 +24,36 @@ for line in file:
 
 print("What is the total output joltage?", result)
 
+# Part Two
+
+result = 0
+file.seek(0)
+
+def getMaxDigit(line, start, mustRemain):
+    max = 0
+    index = 0
+    
+    choppedNumberStr = line[start:-mustRemain] if mustRemain != 0 else line[start:]
+   
+    for i, char in enumerate(choppedNumberStr):
+        digit = int(char)
+        if (digit > max):
+            max = digit
+            index = i
+            
+    return max, index
+
+for line in file:
+    maxNumberStr = ""
+    
+    start = 0
+    for mustRemain in range(11, -1, -1):
+        max, index = getMaxDigit(line.strip(), start, mustRemain)
+        start += index + 1
+        maxNumberStr += str(max)
+        
+    result += int(maxNumberStr)
+
+print("What is the new total output joltage?", result)
+
 file.close()
